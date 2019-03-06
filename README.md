@@ -1,1 +1,2 @@
-这是我学前端以来，所写的一些小demo
+杩欐槸鎴戝鍓嶇浠ユ潵锛屾墍鍐欑殑涓�浜涘皬demo
+This is some of the little demos I've written since I started learning the front-end.
