@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="mycanvas" width="500px" height="500px" style="border:1px solid red"></canvas>
+</body>
+<script>
+    function Person(ctx){
+        this.ctx = ctx || document.querySelector("#mycanvas").getContext("2d");
+        this.canvasWidth = this.ctx.canvas.width;
+        this.canvasHeight = this.ctx.canvas.height;
+        //小人行走的方向  0 前      1 左       2 右       3 后
+        this.direction = 0;
+        //当前显示的是第几张图片
+        this.index = 0;
+        //每按下一次键盘，步进是10
+        this.step = 10;
+
+        //x和y方向移动的距离
+        this.stepX = 0 ;
+        this.stepY = 0;
+
+        //初始化
+        this.init();
+    }
+
+    Person.prototype.init = function(){
+        var that = this;
+        //1.要绑定键盘的事件
+        document.onkeydown = function(e){
+            switch(e.keyCode){
+                case 37:
+                    //左
+                    that.direction = 1;
+                    if(that.stepX > -that.canvasWidth/2){
+                        that.stepX -= that.step;
+                    }
+                    that.drawImage();
+                    break;
+                case 38:
+                    //上
+                    that.direction = 3;
+                    if(that.stepY > -that.canvasHeight/2){
+                        that.stepY -= that.step;
+                    }
+                    that.drawImage();
+                    break;
+                case  39:
+                    //右
+                    that.direction = 2;
+                    if(that.stepX < that.canvasWidth/2){
+                        that.stepX += that.step;
+                    }
+                    that.drawImage();
+                    break;
+                case  40:
+                    //下
+                    that.direction = 0;
+                    if(that.stepY < that.canvasHeight/2){
+                        that.stepY += that.step;
+                    }
+                    that.drawImage();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        //2.调用drawImage方法
+        this.drawImage();
+    }
+
+    Person.prototype.drawImage = function(){
+        //1.每调用一次drawImage方法，说明要绘制一次图片，就让index+1
+        this.index++;
+        if(this.index == 4){
+            this.index = 0;
+        }
+        //2.创建一个图片，在onload方法中让图片显示
+        var image = new Image();
+        image.src = "image/04.png";
+        var that = this;
+        image.onload = function(){
+            var imageWidth = image.width;
+            var imageHeight = image.height;
+            var personWidth = imageWidth/4;
+            var personHeight = imageHeight/4;
+
+            var centerX = that.canvasWidth/2 - personWidth/2;
+            var centerY = that.canvasHeight/2 - personHeight/2;
+            that.ctx.clearRect(0,0,that.canvasWidth,that.canvasHeight);
+            that.ctx.drawImage(image,that.index*personWidth ,that.direction*personHeight,personWidth,personHeight,centerX+that.stepX,centerY+that.stepY,personWidth,personHeight)
+        }
+    }
+
+    var p = new Person();
+
+</script>
+</html>

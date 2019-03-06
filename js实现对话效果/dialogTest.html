@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/dialog.css"/>
+		<!--<script type="text/javascript" src="js/dialog.js"></script>-->
+		<style type="text/css">
+			* {margin:0;padding:0}
+		</style>
+		
+		<script type="text/javascript">
+		
+		window.onload = function(){
+		
+		var gameDialog = function(id,text,speed){
+			var box = document.getElementById(id);
+			var text = text;
+			var len = text.length;
+			var timer = null;
+			var index = 0;
+			var character = '';
+			var flag = false; //默认不允许点击
+			function start(){
+				box.innerHTML = '';
+				timer = setInterval(function(){
+					if(box.scrollHeight > box.clientHeight){
+						//将溢出的那个字保存在下来
+						character = text.charAt(index - 1); //因为上一次已经 ++了，所以这里要减一
+						clearInterval(timer);
+						//当一段对话结束了，就允许点击
+				        flag = true;
+						return;
+					}
+				    if(index == len){
+				        clearInterval(timer);
+				        
+				    }
+				    
+				    if(character){
+						box.innerHTML += character;
+						character = '';//重置该字符
+					}else{
+						box.innerHTML += text.charAt(index++);
+					}
+					
+				},speed);
+			}
+			
+			start();
+			
+			box.onclick = function(){
+				if(flag){
+					start(); 	 //当你允许点击的时候，才触发start函数，否则不好意思，点击无效
+					flag = false;//触发成功后,回到之前的状态
+				}
+				
+			}
+		}
+	
+	
+			
+		gameDialog('content',
+			" 我或许败北，或许迷失自己，或许哪里也抵达不了，"+
+			" 任凭怎么挣扎也只能徒呼奈何，或许我只是徒然掬一把废墟灰烬，" +
+			" 唯我一人蒙在鼓里，或许这里没有任何人把赌注下在我身上。"+
+			" 或许我已失去一切，无所谓。有一点是明确的：至少我有值得等待有值得寻求的东西。" 
+		,28);
+		
+		}
+		
+		
+
+		</script>
+	</head>
+	<body>
+		<div  class='dialog'>
+			<span class='pic'></span>
+			<div id = 'innerBox' class='innerBox'>
+				<div id='content'></div>
+			</div>
+		</div>
+	</body>
+</html>

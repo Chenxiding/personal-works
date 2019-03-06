@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<script type="text/javascript" src="jquery-1.11.2.min.js"></script>
+		<style type="text/css">
+			body {
+				background: url(img/background1.jpg) no-repeat;
+				position: fixed;
+			}
+			ul li {
+				list-style: none;
+			}
+			.wrap {
+				position: relative;
+				left: 170px;
+				top: 65px;
+			}
+			.plants1  {
+				display: inline-block;
+				position: relative;
+				left:35px;
+			}
+			.plants1 .plant {
+				position: relative;
+				margin-bottom:20px;
+			}
+			.plants1 .plant .PB00 {
+				position: absolute;
+				top:-2px;
+				left:15px;
+			}
+			
+			.plants2  {
+				display: inline-block;
+				position: relative;
+				left:2px;
+			}
+			.plants2 .plant {
+				position: relative;
+				margin-bottom:20px;
+			}
+			.plants2 .plant .PB00 {
+				position: absolute;
+				top:-2px;
+				left:15px;
+			}
+			
+			.plants3  {
+				display: inline-block;
+				position: relative;
+				left:-40px;
+			}
+			.plants3 .plant {
+				position: relative;
+				margin-bottom:20px;
+			}
+			.plants3 .plant .PB00 {
+				position: absolute;
+				top:-2px;
+				left:15px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class='wrap'>
+			<ul class='plants1'>
+				<li class='plant'>
+					<img class='Peashooter' src="img/Peashooter.gif" />
+					<img class='PB00' src="img/PB00.gif" />
+				</li>
+				<li class='plant'>
+					<img class='Peashooter' src="img/Peashooter.gif" />
+					<img class='PB00' src="img/PB00.gif" />
+				</li>
+				<li class='plant'>
+					<img class='Peashooter' src="img/Peashooter.gif" />
+					<img class='PB00' src="img/PB00.gif" />
+				</li>
+				<li class='plant'>
+					<img class='Peashooter' src="img/Peashooter.gif" />
+					<img class='PB00' src="img/PB00.gif" />
+				</li>
+				<li class='plant'>
+					<img class='Peashooter' src="img/Peashooter.gif" />
+					<img class='PB00' src="img/PB00.gif" />
+				</li>
+				
+			</ul>
+			
+			<ul class='plants2'>
+				<li class='plant'>
+					<img class='Peashooter' src="img/Peashooter.gif" />
+					<img class='PB00' src="img/PB00.gif" />
+				</li>
+				<li class='plant'>
+					<img class='Peashooter' src="img/Peashooter.gif" />
+					<img class='PB00' src="img/PB00.gif" />
+				</li>
+				<li class='plant'>
+					<img class='Peashooter' src="img/Peashooter.gif" />
+					<img class='PB00' src="img/PB00.gif" />
+				</li>
+				<li class='plant'>
+					<img class='Peashooter' src="img/Peashooter.gif" />
+					<img class='PB00' src="img/PB00.gif" />
+				</li>
+				<li class='plant'>
+					<img class='Peashooter' src="img/Peashooter.gif" />
+					<img class='PB00' src="img/PB00.gif" />
+				</li>
+				
+			</ul>
+			
+			<ul class='plants3'>
+				
+				<li class='plant'>
+					<img class='Peashooter' src="img/Peashooter.gif" />
+					<img class='PB00' src="img/PB00.gif" />
+				</li>
+				<li class='plant'>
+					<img class='Peashooter' src="img/Peashooter.gif" />
+					<img class='PB00' src="img/PB00.gif" />
+				</li>
+				<li class='plant'>
+					<img class='Peashooter' src="img/Peashooter.gif" />
+					<img class='PB00' src="img/PB00.gif" />
+				</li>
+				<li class='plant'>
+					<img class='Peashooter' src="img/Peashooter.gif" />
+					<img class='PB00' src="img/PB00.gif" />
+				</li>
+				<li class='plant'>
+					<img class='Peashooter' src="img/Peashooter.gif" />
+					<img class='PB00' src="img/PB00.gif" />
+				</li>
+			</ul>
+		</div>
+	</body>
+	
+	<script type="text/javascript">
+	
+		function randomNum(num){
+			return Math.floor(Math.random()*(num+1));
+		};
+		
+		setInterval(function(){
+			var $this = $('.PB00').eq(randomNum(17));
+			$this.animate({'margin-left' : 1000},2000,function(){
+				$this.css({'margin-left' : 0});
+			});
+		},10);
+		
+	</script>	
+	
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Document</title>
+    <script src="common.js"></script>
+
+    <style>
+        ul {
+            list-style: none;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            width: 1150px;
+            height: 400px;
+            margin: 50px auto;
+            /*border: 1px solid red;*/
+            overflow: hidden;
+        }
+
+        div li {
+            width: 240px;
+            height: 400px;
+            float: left;
+        }
+
+        div ul {
+            width: 1300px;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="box">
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</body>
+
+<!--<script>
+    //1.给box下的li添加背景图片
+    var box = my$("box");
+    var lis = box.children[0].children;
+
+    for(var i=0;i<lis.length;i++){
+        lis[i].style.backgroundImage = "url(images/"+(i+1)+".jpg)";  //url(images/1.jpg)
+
+        lis[i].onmouseover = mouseoverHandler;
+        lis[i].onmouseout = mouseoutHandler;
+    }
+    //2.鼠标移动到指定的li上添加动画
+    function mouseoverHandler(e){
+        var oev = e||window.event;
+        //2.1 让其他的li以动画的形式缩小宽度
+        for(var i=0;i<lis.length;i++){
+            animate(lis[i],{"width":100},function(){})
+        }
+        //2.2 让当前的li以动画的形式增大宽度
+        var target = oev.target;
+        animate(target,{"width":800},function(){})
+    }
+
+    function  mouseoutHandler(){
+        for(var i=0;i<lis.length;i++){
+            animate(lis[i],{"width":240},function(){})
+        }
+    }
+
+</script>-->
+
+
+<script>
+    //1.给box下的li添加背景图片
+    var box = my$("box");
+    var lis = box.children[0].children;
+
+    for(var i=0;i<lis.length;i++){
+        lis[i].style.backgroundImage = "url(images/"+(i+1)+".jpg)";  //url(images/1.jpg)
+    }
+
+    box.onmouseover = function(e){
+        var oev = e||window.event;
+        //2.1 让其他的li以动画的形式缩小宽度
+        for(var i=0;i<lis.length;i++){
+            animate(lis[i],{"width":100},function(){})
+        }
+        //2.2 让当前的li以动画的形式增大宽度
+        var target = oev.target;
+        console.log(target);
+        animate(target,{"width":800},function(){})
+    }
+
+    box.onmouseout =  function(){
+        for(var i=0;i<lis.length;i++){
+            animate(lis[i],{"width":240},function(){})
+        }
+    }
+
+
+</script>
+
+</html>

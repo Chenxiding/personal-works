@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <script src="js/jquery-1.8.2.js"></script>
+
+    <style>
+        .playerTitle{
+            text-align: center;
+            font-size: 36px;
+        }
+
+        .player{
+            width: 720px;
+            height: 360px;
+            margin: 0 auto;
+            position: relative;
+            background-image: url(images/loading.gif);
+            background-size: cover;
+            background-position: center center;
+        }
+
+        video{
+            width: 640px;
+            height: 100%;
+            margin-left: 40px;
+        }
+
+        .controls{
+            position: absolute;
+            height: 40px;
+            background-color: black;
+            bottom : -40px;
+            width: 100%;
+        }
+
+        .switch{
+            position: absolute;
+            left: 5px;
+            line-height:40px ;
+        }
+
+        .controls a{
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+        }
+
+        .expand{
+            position: absolute;
+            right: 5px;
+            line-height: 40px;
+        }
+
+        .progress{
+            width: 65%;
+            height: 10px;
+            background-color: #555;
+            position: absolute;
+            left: 30px;
+            top: 15px;
+            border-radius: 5px;
+        }
+
+        .progress .bar{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            background-color: red;
+            height:100%;
+            width: 100%;
+            z-index: 999;
+            opacity: 0.0;
+            cursor: pointer;
+        }
+
+        .progress .elapse{
+            position: absolute;
+            top:0px;
+            left:0px;
+            width: 0%;
+            background-color: #fff;
+            height: 100%;
+            border-radius: 5px;
+        }
+
+        .time{
+            position: absolute;
+            right: 60px;
+            line-height: 40px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h3 class="playerTitle">视频播放器</h3>
+    <div class="player">
+        <video src="mp4/chrome.mp4"></video>
+        <div class="controls">
+            <a href="javascript:;" class="switch fa fa-play"></a>
+            <a href="javascript:;" class="expand fa fa-expand"></a>
+            <div class="progress">
+                <!--bar是透明的，主要作用用来控制拖动-->
+                <div class="bar"></div>
+                <!--elapse主要用来显示已经播放的进度-->
+                <div class="elapse"></div>
+            </div>
+            <div class="time">
+                <span class="currentTime">00:00:00</span>
+                \
+                <span class="totalTime">00:00:00</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<script>
+    var video = $("video")[0];
+    //1.点击播放按钮开始播放 暂停
+    $(".switch").click(function(){
+        $(this).toggleClass("fa-play fa-pause");
+        if(video.paused){
+            video.play();
+        }
+        else{
+            video.pause();
+        }
+    })
+
+    //2.获取总时间
+    video.oncanplay = function(){
+        var total = video.duration;
+        total = getResult(total);
+        $(".totalTime").text(total);
+    }
+
+    //3.将秒的时间转换为时分秒
+    //0小时--->00小时
+    function getResult(time){
+        var hour = Math.floor(time/3600);
+        var h = hour<10?"0"+hour:hour;
+        var minute = Math.floor(time%3600/60)
+        var m = minute<10?"0"+minute:minute;
+        var second = Math.floor(time%60);
+        var s = second<10?"0"+second:second;
+        return h+":"+m+":"+s;
+    }
+
+    //4.视频的全屏
+    $(".expand").click(function(){
+        if(video.requestFullScreen){
+            video.requestFullScreen();
+        }
+        else if(video.webkitRequestFullScreen){
+            video.webkitRequestFullScreen();
+        }
+        else if(video.mozRequestFullScreen){
+            video.mozRequestFullScreen();
+        }
+        else if(video.msRequestFullScreen){
+            video.msRequestFullScreen();
+        }
+    })
+
+    //5.播放时间的显示
+    video.ontimeupdate = function(){
+        //5.1 设置当前的播放事件
+        //获取当前的播放时间
+        var ct = video.currentTime;
+        var t = getResult(ct);
+        //将当前的播放事件放到currentTime标签中
+        $(".currentTime").html(t);
+
+        //5.2 设置播放进度
+        var total = video.duration;
+        var perce = ct/total *100 + "%";
+        $(".elapse").css("width",perce);
+    }
+
+    //6.实现播放进度的拖动
+    $(".bar").click(function(e){
+        var left = e.clientX - $(".progress")[0].offsetLeft - $(".player")[0].offsetLeft;
+        var p = left/$(this).width();
+        var current = p * video.duration;
+        video.currentTime = current;
+        console.log(video.currentTime);
+    })
+
+    //7.播放完毕
+    video.onended = function(){
+        video.currentTime = 0;
+        $(".switch").removeClass("fa-pause").addClass("fa-play");
+    }
+</script>
+</html>

@@ -1,0 +1,255 @@
+body {
+		overflow:hidden;
+		background: url(../img/bg.jpg) no-repeat;
+		background-size: 100%;
+	}
+
+	.btn {
+		
+	    border: 1px solid #AFA4A4;
+	    display: inline-block;
+	    position: absolute;
+	}
+
+	.music_box {width:200px;height:380px;border:1px solid #666;border-radius: 10px;top:100px;left:600px;position: relative;background-color: #fff; display: block; }
+	.music_box .screen {width:180px;height:290px;border:1px solid #ccc;margin:8px auto;background: #222;position: relative;}
+
+	.music_box .screen .lrc{
+		height:170px;
+		position: absolute;
+		bottom:30px;
+		width:100%;
+		text-align: center;
+		color: #eaeaea;
+		overflow: hidden;
+
+	}
+
+	.music_box .screen .lrc_content{
+		transition: all 1s ease;
+	}
+
+	.music_box .screen .lrc_content lrc_line{
+		position:relative; /*为了获取距离上面的top值*/
+
+	}
+
+	.music_box .buttons {width:180px;height:60px;/* border:1px solid #ccc; */margin-left:10px;;position: relative;border-radius:10px;}
+	.music_box .buttons .play {
+	    left: 50%;
+	    margin-left: -20px;
+	    top: 50%;
+	    margin-top: -20px;
+	    background: #fff;
+	    border-radius: 50%;
+		border:2px solid #ccc;
+	    width: 40px;
+	    height: 40px;
+	}
+
+	.music_box .buttons .play:hover {
+		cursor: pointer; /*鼠标变成一个小手的样子*/
+		
+	}
+
+	.music_box .buttons .prev:hover {
+		cursor: pointer; /*鼠标变成一个小手的样子*/
+		
+	}
+
+	.music_box .buttons .next:hover {
+		cursor: pointer; /*鼠标变成一个小手的样子*/
+		
+	}
+
+	.music_box .buttons .prev {
+		border-radius:10px;
+		width:40px;
+		height:20px;
+		top: 18px;
+		left: 18px;
+		border: 1px solid #ccc;
+
+	}
+
+	.music_box .buttons .next {
+		border-radius:10px;
+		width:40px;
+		height:20px;
+		top: 18px;
+		right: 18px;
+		border: 1px solid #ccc;
+
+	}
+
+	.playInfo {
+		display: inline-block;
+	    position: absolute;
+	    color:#fff;
+	    left: 18px;
+		top: 16px;
+		font-family: 微软雅黑;
+		border-bottom:1px solid #fff;
+	}
+
+	.bar {
+		display: inline-block;
+	    position: absolute;
+	    width:90%;
+	    
+	    height:12px;
+	    bottom:10px;
+	    margin:10px 10px;
+
+	}
+
+	.progress {
+		height:100%;
+		background:#eaeaea;
+		width:0%;
+		border-radius: 2px;
+	}
+
+	#music_icon {
+		position: absolute;
+		top:100px;
+		left:50px;
+		border-radius: 50%;
+		transition: all 1s ease;
+		width:60px;
+	}
+
+	#music_icon:hover {
+		border:1px solid #ccc;
+		width:70px;
+		cursor: pointer;
+	}
+
+	#m_close {
+	    display: inline-block;
+	    width: 30px;
+	    height: 30px;
+	    background-color: #fff;
+	    color: #222;
+	    font-size: 16px;
+	    text-align: center;
+	    line-height: 30px;
+	    font-weight: 600;
+	    border-radius: 50%;
+	    position: absolute;
+	    z-index: 1;
+	    right: -13px;
+	    top: -13px;
+	    display:none;
+		transition:all ease 1s;
+		border:1px solid #ccc;
+	}
+
+	#m_close:hover{
+		 background-color: orange;
+		 cursor: pointer;
+		 color:#fff;
+
+	}
+
+	/*遮罩层*/
+	.bg {
+		width:100%;
+		height:100%;
+		overflow:hidden;
+		background: url(../img/bg3.jpg) no-repeat;
+		background-size: 100%;
+		position: relative; /*不加的话遮不了下面的box*/
+		z-index:2;
+		
+	}
+
+	.bg img {
+		opacity: 0.8;
+		position: absolute;
+		top: 9%;
+		left: 40%;
+		width: 222px;
+		border-radius: 50%;
+	}
+
+	.bg .username {
+		color: #fff;
+		position: absolute;
+		top: 47%;
+		left: 45%;
+		font-size: 36px;
+		
+	}
+
+	.bg .input_div {
+		position: absolute;
+		top: 57%;
+		left: 38%;
+		font-size: 36px;
+		height: 35px;
+		width: 330px;
+		background: rgba(0,0,0,0.3);
+		opacity: 0.8;
+		border:2px solid #ccc;
+	}
+
+	.bg .input_div:hover {
+		border:2px solid #fff;
+	}
+
+	.bg .input_div input{
+		
+		height: 100%;
+		width: 296px;
+		background:#fff;
+		font-size:16px;
+	}
+
+	
+	.bg .input_div span {
+		float: right;
+		color: #fff;
+		font-size: 22px;
+		display: inline-block;
+		width: 30px;
+		height: 30px;
+		line-height: 38px;
+		font-weight: 600;
+		cursor:pointer;
+	}
+		
+
+
+	#box{width:100%;position:absolute;bottom:0;
+		text-align:center;
+	}
+
+	#box span{width:64px;display:inline-block;text-align:center;border-radius:50%;
+		font-size:24px;
+		color:#fff;
+		font-weight:700;
+	}
+	#box span img{max-width:100%;border-radius:50%;position:relative;}
+
+
+/*呼吸灯特效*/
+@keyframes breath_light1
+{
+from {background: #FFF;border: 2px solid #ccc;}
+to {background: skyblue;border: 2px solid #eaeaea;}
+}
+
+@keyframes breath_light2
+{
+from {background: skyblue;border: 2px solid #eaeaea;}
+to {background: #FFF;border: 2px solid #ccc;}
+}
+
+.breath_light1 {
+	animation : breath_light1 5s;
+}
+
+.breath_light2 {
+	animation : breath_light2 5s;
+}

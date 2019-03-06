@@ -1,0 +1,358 @@
+<html>
+	<head>
+		<!--声明当前页面的编码集：charset=gbk,gb2312(中文编码)，utf-8国际编码-->
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<!--当前页面的三要素-->
+		<title>JavaScript应用</title>
+		<meta name="Keywords" content="关键词,关键词">
+		<meta name="description" content="">
+
+		<!--css,js-->
+		<style type="text/css">
+			*{margin:0;padding:0;}
+
+		</style>
+
+		<!-- 引入EasyUI资源库文件 -->
+		
+		<script type="text/javascript" src="jquery-easyui-1.3.3/jquery.min.js"></script>
+		<script type="text/javascript" src="jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="js/jquery.color.js"></script>
+		
+
+		<script type="text/javascript" src="js/audioManager.js"></script>
+
+		<script type="text/javascript">
+
+			
+			//专门用来写javascript代码
+			
+
+
+		</script>
+
+		<link rel="stylesheet" href="css/index.css" type="text/css" ></link>
+
+	</head>
+
+
+<body>
+
+	
+	<!-- 遮罩层 -->
+	
+	<div class='bg'>
+		
+		
+		<img src="img/user.png" ></img>
+		<div class='username'>admin</div>
+		<div class='input_div'>
+			<input type="password" placeholder="密码"></input>
+			<span style="float:right" onClick="login();">→</span>
+		</div>
+		
+	
+	</div>
+
+
+	<!-- 音乐播放器盒子 -->
+
+	<div class="music_box easyui-draggable"  id="music_box">
+
+		<span id="m_close">×</span>
+		
+		<div class='screen'>
+			
+			<span class='playInfo'>当前播放：<font id='name'>暂无</font></span>
+			<span class='bar'>
+
+				<div class='lrc'>
+					<div class='lrc_content'></div>	
+				</div>
+				<div id='progress' class='progress'></div>
+
+			</span>
+
+		</div>
+
+		<div class='buttons'>
+			<span class='prev btn' onClick="prev();"></span>
+			<span class='play btn' onClick="play();"></span>
+			<span class='next btn' onClick="next();"></span>
+
+		</div>
+
+	</div>
+
+
+	<script type="text/javascript">
+
+		var count = 0;
+
+		//用户登录
+		function login(){
+				
+			player.init("audio");
+			player.play('3372.wav');
+			$('.bg').animate({'margin-top':'-1000px'},1000,function(){
+				
+				$(this).remove();
+			
+			});
+
+		}
+
+		function openMusic(obj){
+
+
+			player.init("audio2");
+			player.play('4123.wav');
+			$(obj).animate({'top':'-100px'},'fast',function(){
+				$(obj).animate({'top':'0px'},'fast',function(){
+					$(obj).animate({'top':'-100px'},'fast',function(){
+						$(obj).animate({'top':'0px'},'fast',function(){
+							document.getElementById('music_box').style.display = "block";
+						});
+					});
+				});
+			});
+		
+			
+
+			
+
+		}
+
+		var flag = true;
+
+		player.init("audio");
+		var info = document.getElementById('name');
+		
+		function prev(){
+			$('.lrc_content').eq(0).html('');
+			//console.log(info);
+			
+			player.prev();
+
+			info.innerText = player.getMusicName();
+			flag = true;
+			play();
+
+			count = 0;
+		}
+
+		function next(){
+			$('.lrc_content').eq(0).html('');
+			player.next();
+			info.innerText = player.getMusicName();
+			flag = true;
+			play();
+
+			count = 0;
+			
+		}
+
+
+
+		var breath_timer = null; //呼吸灯的定时器
+
+		//播放音乐
+		player.init("audio");
+		function play(){
+			
+			if(flag){
+				player.playMusic();
+				flag = false;
+
+				//打开呼吸灯
+				var flag1 = true;
+				breath_timer = setInterval(function(){
+					if(flag1){
+						$('.play').eq(0).removeClass("breath_light2").addClass('breath_light1');
+						flag1 = false;
+					}else{
+						$('.play').eq(0).removeClass("breath_light1").addClass('breath_light2');
+						flag1 = true;
+					}
+					
+				},5000);
+
+			}else{
+				player.playMusic();
+				flag = true;
+				
+				
+				//关闭呼吸灯
+				clearInterval(breath_timer);
+
+
+				//$('.lrc_content').eq(0).html('');
+
+				$('.lrc_content').eq(0).css('margin-top',"0px");
+				count = 0;
+				
+				return;
+			}
+			
+			info.innerText = player.getMusicName();
+
+			//判断是否有歌词
+			$('.lrc_content').eq(0).html(''); //不管有没有歌词，都清空页面上已有的歌词
+			if(player.lrc[player.index]){
+				//alert('有歌词！');  [01:48.25]对我而言是另一天
+				var arr = player.lrc[player.index].split('[');
+				//var lrcObj = {};
+				var html = '';
+
+				for(var i=1;i<arr.length;i++){
+					var time = arr[i].split(']')[0];
+					var text = arr[i].split(']')[1];
+					var minute = time.split(':')[0] * 1;
+					var second = time.split(':')[1].split(',')[0] * 1;
+		
+					var seconds = Math.floor(minute * 60 + second);
+					//console.log(minute + "========" + second);
+					html += "<div class='lrc_line' id='t_"+seconds+"'>"+text+"</div>";
+				}
+
+				//console.log(html);
+
+				$('.lrc_content').eq(0).html(html);
+			}else{
+				
+			}
+
+			//呼吸灯
+			//console.log($('.play').eq(0));
+			
+			
+			
+			
+			
+
+		}
+
+		
+		player.timeupdate(function(music){
+			
+			//获取当前播放时间
+			var currentTime = music.currentTime;
+			currentTime = Math.floor(currentTime);
+
+			//音乐的总时长
+			var total = music.duration;
+
+			var percent = Math.floor(currentTime / total  * 100) + "%";
+
+			//动态更新进度条
+			document.getElementById('progress').style.width = percent;
+
+			//console.log(percent);
+
+			//歌词滚动
+			
+			//console.log(currentTime);
+			//歌词同步
+			if($('#t_' + currentTime)){
+				$('#t_' + currentTime).css({'color':'skyblue','font-size':'18px'})
+				.siblings().css({'color':'#ccc','font-size':'14px'});
+
+				try{
+					//console.log($('#t_' + currentTime).offset().top);
+					if($('#t_' + currentTime).offset().top < 198){
+						console.log('快到上面去了');
+						count -= 20;
+					}
+
+					if($('#t_' + currentTime).offset().top > 290){
+						console.log('快到下面去了');
+						count += 20;
+					}
+
+				}catch(e){
+
+				}
+
+				$('.lrc_content').eq(0).css('margin-top',-(count += 1) + "px");	
+
+				//获取选中歌词的top值
+				//console.log($('#t_' + currentTime).get(0).offsetTop);
+			}
+
+		});
+
+
+
+	</script>
+	
+
+	<script>
+		
+		window.onload = function(){
+			
+			//为了防止闪屏，这些元素我们在后面加载
+			$('body').append(" <div id=\"box\">"+
+							" <span><img  src='img/1.jpg' onclick=\"openMusic(this)\"></img></span>"+
+							" <span><img src=\"img/2.jpg\"/></span>"+
+							" <span><img src=\"img/3.jpg\"/></span>"+
+							" <span><img src=\"img/4.jpg\"/></span>"+
+							" </div>");
+
+
+			//给音乐播放器添加一个鼠标滑过的监听事件
+
+			document.getElementById('music_box').onmousemove = function(){
+				document.getElementById('m_close').style.display = 'block';
+			}
+
+			document.getElementById('music_box').onmouseout = function(){
+				document.getElementById('m_close').style.display = 'none';
+			}
+
+			document.getElementById('m_close').onclick = function(){
+				document.getElementById('music_box').style.display = 'none';
+				player.stop(); //关闭音乐窗口的同时，也停止正在播放的音乐	
+			}
+
+
+
+			//功能图标
+			var boxDom = document.getElementById("box");
+			//var spanDoms = boxDom.getElementsByTagName("span");
+			var spanDoms = boxDom.children;
+
+			//拿到input框对象
+			var inputDoms = document.getElementsByTagName("input");
+
+
+			//鼠标移动事件
+			document.onmousemove = function(e){
+				var ev = e || window.event;
+				var x = ev.clientX;
+				var y = ev.clientY;
+			
+				for(var i=0;i<spanDoms.length;i++){
+					var x1 = spanDoms[i].offsetLeft + spanDoms[i].offsetWidth / 2;
+					var y1 = spanDoms[i].offsetTop +spanDoms[i].offsetHeight / 2 + boxDom.offsetTop ;
+
+					var a = x - x1;//x1 - x 
+					var b = y - y1;//y1- y
+					//勾股定理
+					var c = Math.sqrt(a *a + b * b);
+					
+					var bit = 1- c / 300;
+					if(bit <= 0.5) bit = 0.5;//回归原始大小
+					
+
+					//放大一倍.64 * 2
+					spanDoms[i].style.width = bit * 128+"px";
+					spanDoms[i].style.height = bit * 128+"px";
+				};
+
+			}
+		};
+	
+	</script>
+
+</body>
+</html>

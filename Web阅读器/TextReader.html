@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>TextReader</title>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		
+		<style type="text/css">
+			
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			
+			body{
+				background: url(bg.jpg) no-repeat;
+				background-size: 100%;
+			}
+			
+			.phone {
+				width:322px ;
+				height:550px; 
+				position:relative;
+				left:35%;
+				top:35px;
+			}
+			
+			.phone .phone_top {
+				background: url(phone_top.png);
+				height:42px;
+			}
+			
+			.phone .phone-bottom  {
+				background: url(phone_bottom.png);
+			    position: absolute;
+			    height: 42px;
+			    width: 100%;
+			    bottom: 0;
+			}
+			
+			.phone .container{
+				overflow-x: hidden;
+				overflow-y: auto;
+				width:90%;
+				background:#ccc;
+				height:456px;
+				font-size:14px;
+				text-align:left;
+				background:#dcf3dc;
+				font-family:微软雅黑;
+				color:#555;
+				line-height:28px;
+				padding:16px;
+				text-indent: 2em;
+				padding: 16px 16px 0px 16px;
+			}	
+			
+			.phone .container h4 {
+				text-indent: 0;
+				margin-bottom: 1em;
+				color:#736357;
+				border-bottom:1px solid #736357;
+				letter-spacing: 2px;
+			}
+			
+			.phone .container p {
+				margin-bottom: 15px;
+				letter-spacing: 2px;
+			}
+			
+			.phone .container #toTop {
+				width: 40px;
+				height: 60px;
+				display: inline-block;
+				position: absolute;
+				background: url(top.png) no-repeat;
+				background-size: 100%;
+				bottom:80px;
+				right: 15px;
+				opacity: 0.7;
+			}
+			
+			.back {
+				width: 30px;
+			    height: 30px;
+			    position: absolute;
+			    left: 50%;
+			    margin-left: -15px;
+			    border: 2px solid #c7bcbc;
+			    top: 4px;
+			    border-radius: 50%;
+			}
+			
+			/** 滚动条样式美化  */
+			::-webkit-scrollbar{width:5px;height:6px;background:#ccc;}
+			::-webkit-scrollbar-button{background-color:#e5e5e5;}
+			::-webkit-scrollbar-track{background:#999;}
+			::-webkit-scrollbar-track-piece{background:#ccc}
+			::-webkit-scrollbar-thumb{background:#666;}
+			::-webkit-scrollbar-corner{background:#82AFFF;}
+			::-webkit-scrollbar-resizer{background:#FF0BEE;}
+			scrollbar{-moz-appearance:none !important;background:rgb(0,255,0) !important;}
+			scrollbarbutton{-moz-appearance:none !important;background-color:rgb(0,0,255) !important;}
+			scrollbarbutton:hover{-moz-appearance:none !important;background-color:rgb(255,0,0) !important;}
+
+		</style>
+	</head>
+	
+<body>
+	<div class='phone'>
+		<div class='phone_top'></div>
+		<div class='container'>
+			
+			<span id='toTop'></span>
+			
+			<h4>刀剑神域 </h4>
+			<p>
+				在一群好奇心旺盛的高手花了整整一个月测量后，发现最底层区域的直径大约有十公里，足以轻松容纳下整个世田谷区。再加上堆积在上面百层左右的楼层，其宽广的程度可说超乎想像。整体的档案量大到根本无法测量。 这样的空间内部有好几个都市、为数众多的小型街道与村落、森林和草原，甚至还有湖的存在。而连接每个楼层之间的阶梯只有一座，阶梯还都位于充斥怪物的危险迷宫区域之中，因此要发现并通过阶梯可以说是相当困难。但只要有人能够突破阻碍抵达上面的楼层，上下层各都市的「转移门」便会连结起来，人们也就可以自由来去两个楼层之间。
+			</p>
+			<p>
+				经过两年的时间，这个巨大城堡就这样被逐渐地往上攻略，目前已到达第七十四层。城堡的名称是「艾恩葛朗特」。这座持续飘浮在空中、吞噬了将近六千人，充满着剑与战斗的世界。它的另一个名字是——SwordArtOnline刀剑神域」。闪烁着深灰色光芒的剑尖，浅浅地划过我的肩膀。 那固定显示在视线左上角的细长横线，好不容易缩短了长度。同时，似乎有只冰冷的手掌，抚摸过我胸口深处。 
+			</p>
+			<p>
+				横线——那称为HP条的蓝色条状物，可以看出我的生命残值。虽然它还有八成左右的残值，但不能把事情看得太过于乐观。因为相对来说，我已经朝死亡深渊前进了两步。 在敌人的剑再度进入攻击动作之前，我就先往后跳开一大步，以保持与敌人之间的距离。 
+			</p>
+			<p>「呼……」 
+			</p>
+			<p>硬是吐了一大口气来调整一下气息。在这个世界的「身体」虽然不需要氧气，但在另一边，也就是躺在真实世界里的真正身体，现在呼吸应该非常剧烈。而随意摆放的手应该正流着大量冷汗，心跳也加速到破表了吧。 </p>
+			
+			<p>这也是理所当然的事。就算我眼前所见全部都是虚拟的立体影像对象，减少的也只是数值化的生命值，但我现在的确是赌上自己的性命在战斗。 从赌上性命这点来看，这场战斗真是相当不公平。因为，眼前的「敌人」——这除了拥有闪耀着光芒的深绿鳞片皮肤与长手臂外，还有着蜥蜴头与尾巴的半人半兽怪物，不只外表不是人类、甚至没有真实的生命。它只不过是不论被杀掉多少次，都可以由系统无限重生的数字文件档案集合体。 </p>
+			<p>不对。 目前，操纵这只蜥蜴人的AI程序正在观察、学习我的战斗方式，用以不断提升自己的应对能力。但这些学习档案，在该个体消灭后便会重置，而且不会反馈到下次出现在这个区域的同种个体上。 
+			</p>
+			
+		</div>
+		<div class='phone-bottom'>
+			<span class='back'></span>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	//单机图标直接返回顶部
+	$('#toTop').on('click',function(){
+		$('.phone .container').eq(0).stop(true, true).animate({ scrollTop: 0},500,function(){
+			$('#toTop').css({'opacity' : 0}); 
+		});
+		
+		return false;
+	});
+	
+
+	var justScrollTop = 0; //记录上一次滚动条距离顶部的位置
+	
+	//滚动条监听事件
+	$('.phone .container').on('scroll',function(e){
+		if(e.target.scrollTop > justScrollTop){
+			$('#toTop').css({'opacity' : 0});
+		}else{
+			$('#toTop').css({'opacity' : 0.8});
+		}
+		
+		justScrollTop = e.target.scrollTop;
+	});
+</script>
+
+
+</html>
